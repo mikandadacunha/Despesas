@@ -15,10 +15,11 @@ class ExpensiveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const MyHomePage(),
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-            primary: Colors.deepPurple, secondary: Colors.amber),
+            primary: Colors.blueGrey, secondary: Colors.teal),
         appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
                 color: Colors.white,

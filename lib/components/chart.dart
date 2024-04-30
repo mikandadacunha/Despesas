@@ -39,16 +39,22 @@ double get _weekTotalValue {
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: groupedTransiction.map((tr) {
-          return ChartBar(
-              laber: tr['day'].toString(),
-              value: tr['value'] as double,
-              percentage: (tr['value'] as double) / _weekTotalValue
-              
-              );
-        }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: groupedTransiction.map((tr) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                  laber: tr['day'].toString(),
+                  value: tr['value'] as double,
+                  percentage: (tr['value'] as double) / _weekTotalValue
+                  
+                  ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
