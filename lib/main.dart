@@ -79,16 +79,29 @@ class _MyHomePageState extends State<MyHomePage> {
         id: 't3',
         date: DateTime.now().subtract(const Duration(days: 5)),
         title: 'Cadeira',
-        value: 84.5)
+        value: 84.5),
+    Transaction(
+        id: 't1',
+        date: DateTime.now().subtract(const Duration(days: 6)),
+        title: 'Nova Carregador MacBook',
+        value: 34.49),
+    Transaction(
+        id: 't2',
+        date: DateTime.now().subtract(const Duration(days: 0)),
+        title: 'Fato na igreja',
+        value: 198.98),
+    Transaction(
+        id: 't3',
+        date: DateTime.now().subtract(const Duration(days: 8)),
+        title: 'Titulo de conduao',
+        value: 650000.5),
   ];
 
   List<Transaction> get _recentTransaction {
     ////Quantidade de dias a serem mostrados, this function calculate days after the transaction
     ///made, if it is within 7 days, then is not possible to be showed.
     return _transictions.where((tr) {
-      return tr.date.isAfter(
-        DateTime.now().subtract(
-        const Duration(days: 7)));
+      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
   }
 
