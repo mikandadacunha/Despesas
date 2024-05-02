@@ -19,23 +19,22 @@ class ExpensiveApp extends StatelessWidget {
       home: const MyHomePage(),
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-            primary: Colors.blueGrey, secondary: Colors.teal),
+            primary: Colors.blueGrey, secondary: Colors.teal, inversePrimary: Colors.white),
         appBarTheme: const AppBarTheme(
-            titleTextStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold)),
+          titleTextStyle: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              titleLarge: const TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize:
-                    16, // Defina o tamanho da fonte do título do AppBar conforme necessário
-                fontWeight: FontWeight
-                    .bold, // Defina o peso da fonte do título do AppBar conforme necessário
-                // Outras propriedades de estilo de texto conforme necessário
-              ),
+            titleLarge: const TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize:
+                  16, // Defina o tamanho da fonte do título do AppBar conforme necessário
+              fontWeight: FontWeight
+                  .bold, // Defina o peso da fonte do título do AppBar conforme necessário
+              // Outras propriedades de estilo de texto conforme necessário
             ),
+            labelLarge: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }
