@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
   // ignore: use_key_in_widget_constructors
   const TransactionForm(this.onSubmit);
@@ -11,18 +12,35 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _valueController = TextEditingController();
+   DateTime _selectedDate = DateTime.now();
 
   /// Function that we use to submit the information of transcation throw the mobile kwyboard
   _onSubmit() {
-    final value = double.tryParse(valueController.text) ?? 0.0;
-    final title = titleController.text;
+    final value = double.tryParse(_valueController.text) ?? 0.0;
+    final title = _titleController.text;
 
-    if (title.isEmpty || value <= 0) {
+    if (title.isEmpty || value <= 0 || _selectedDate == Null) {
       return;
     }
-    widget.onSubmit(title, value);
+    widget.onSubmit(title, value, _selectedDate);
+  }
+
+  _showDataPicker() {
+    showDatePicker(
+      context: context,
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+        setState(() {
+        _selectedDate = pickedDate;
+          
+        });
+    });
   }
 
   @override
@@ -35,7 +53,7 @@ class _TransactionFormState extends State<TransactionForm> {
         child: Column(
           children: [
             TextField(
-              controller: titleController,
+              controller: _titleController,
               onSubmitted: (_) {
                 _onSubmit();
               },
@@ -47,7 +65,7 @@ class _TransactionFormState extends State<TransactionForm> {
               },
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
-              controller: valueController,
+              controller: _valueController,
               decoration:
                   const InputDecoration(labelText: 'Valor associado (€)'),
             ),
@@ -55,17 +73,21 @@ class _TransactionFormState extends State<TransactionForm> {
               height: 60,
               child: Row(
                 children: [
-                  const Text('Nehuma data selecionado'),
+                  Expanded(
+                    child: Text(_selectedDate == Null
+                        ? 'Nehuma data selecionado'
+                        : 'Seleted date: ${DateFormat('dd/MM/y').format(_selectedDate)}'),
+                  ),
                   Container(
                     width: 150,
                     child: FloatingActionButton(
                       elevation: 0,
                       backgroundColor: Colors.transparent,
                       foregroundColor: Theme.of(context).primaryColor,
+                      onPressed: _showDataPicker,
                       child: const Text(
                         'Selecionar Data',
                       ),
-                      onPressed: () {},
                     ),
                   )
                 ],
@@ -76,25 +98,36 @@ class _TransactionFormState extends State<TransactionForm> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    height: 50,
-                    width: 120,
-                    child: FloatingActionButton(
-                      elevation: 0,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child:  const Text(
-                        'Add Novo',
-                        style: TextStyle(color: Colors.white),
+                  ///Button,
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.zero, // Define os cantos quadrados
+                        ),
                       ),
-                      onPressed: () {
-                        final value =
-                            double.tryParse(valueController.text) ?? 0.0;
-                        final title = titleController.text;
-              
-                        widget.onSubmit(title, value);
-                      },
+                      minimumSize:
+                          const MaterialStatePropertyAll(Size(150, 40)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context)
+                              .primaryColor), // Define a cor de fundo
                     ),
+                    child: Text(
+                      'Add Novo',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.color), //define cor do texto do botao
+                    ),
+                    onPressed: () {
+                      final value =
+                          double.tryParse(_valueController.text) ?? 0.0;
+                      final title = _titleController.text;
+
+                      widget.onSubmit(title, value, _selectedDate);
+                    },
                   ),
                 ],
               ),

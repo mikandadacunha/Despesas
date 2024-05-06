@@ -19,7 +19,9 @@ class ExpensiveApp extends StatelessWidget {
       home: const MyHomePage(),
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-            primary: Colors.blueGrey, secondary: Colors.teal, inversePrimary: Colors.white),
+            primary: Colors.blueGrey,
+            secondary: Colors.teal,
+            inversePrimary: Colors.white),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
               color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
@@ -34,7 +36,8 @@ class ExpensiveApp extends StatelessWidget {
                   .bold, // Defina o peso da fonte do título do AppBar conforme necessário
               // Outras propriedades de estilo de texto conforme necessário
             ),
-            labelLarge: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            labelLarge: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -49,10 +52,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
+
+    
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
-        date: DateTime.now(),
+        date: date,
         title: title,
         value: value);
 
@@ -63,37 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop();
   }
 
-  final _transictions = [
-    Transaction(
-        id: 't1',
-        date: DateTime.now().subtract(const Duration(days: 1)),
-        title: 'Nova Fronha',
-        value: 680.9),
-    Transaction(
-        id: 't2',
-        date: DateTime.now().subtract(const Duration(days: 4)),
-        title: 'Novo Edredom',
-        value: 540.5),
-    Transaction(
-        id: 't3',
-        date: DateTime.now().subtract(const Duration(days: 5)),
-        title: 'Cadeira',
-        value: 84.5),
-    Transaction(
-        id: 't1',
-        date: DateTime.now().subtract(const Duration(days: 6)),
-        title: 'Nova Carregador MacBook',
-        value: 34.49),
-    Transaction(
-        id: 't2',
-        date: DateTime.now().subtract(const Duration(days: 0)),
-        title: 'Fato na igreja',
-        value: 198.98),
-    Transaction(
-        id: 't3',
-        date: DateTime.now().subtract(const Duration(days: 8)),
-        title: 'Titulo de conduao',
-        value: 650000.5),
+  final List<Transaction> _transictions = [ 
+    
   ];
 
   List<Transaction> get _recentTransaction {
@@ -142,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             /// The parameter/column that show all transiction that a have made, from my locar list of models transiction _transictions
 
-            TransactionList(_transictions),
+           TransactionList(_transictions),
 
             //// New section card, adictionating a new transiction on the app
           ],
