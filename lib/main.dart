@@ -53,8 +53,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   _addTransaction(String title, double value, DateTime date) {
-
-    
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
         date: date,
@@ -68,9 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop();
   }
 
-  final List<Transaction> _transictions = [ 
-    
-  ];
+  final List<Transaction> _transictions = [];
 
   List<Transaction> get _recentTransaction {
     ////Quantidade de dias a serem mostrados, this function calculate days after the transaction
@@ -78,6 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return _transictions.where((tr) {
       return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
+  }
+// function to delete each item from the listtile, from id.
+  _removeTransaction(String id) {
+    setState(() {
+      return _transictions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   /// function that open the modal form to register a new transition
@@ -118,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             /// The parameter/column that show all transiction that a have made, from my locar list of models transiction _transictions
 
-           TransactionList(_transictions),
+            TransactionList(_transictions, _removeTransaction),
 
             //// New section card, adictionating a new transiction on the app
           ],

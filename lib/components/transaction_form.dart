@@ -10,21 +10,24 @@ class TransactionForm extends StatefulWidget {
   @override
   State<TransactionForm> createState() => _TransactionFormState();
 }
+final msgError = TextEditingController();
+
 
 class _TransactionFormState extends State<TransactionForm> {
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
-   DateTime _selectedDate = DateTime.now();
+   DateTime? _selectedDate;
 
   /// Function that we use to submit the information of transcation throw the mobile kwyboard
   _onSubmit() {
     final value = double.tryParse(_valueController.text) ?? 0.0;
     final title = _titleController.text;
+    
 
-    if (title.isEmpty || value <= 0 || _selectedDate == Null) {
+    if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return;
     }
-    widget.onSubmit(title, value, _selectedDate);
+    widget.onSubmit(title, value, _selectedDate!);
   }
 
   _showDataPicker() {
@@ -74,9 +77,9 @@ class _TransactionFormState extends State<TransactionForm> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(_selectedDate == Null
+                    child: Text(_selectedDate == null
                         ? 'Nehuma data selecionado'
-                        : 'Seleted date: ${DateFormat('dd/MM/y').format(_selectedDate)}'),
+                        : 'Seleted date: ${DateFormat('dd/MM/y').format(_selectedDate!)}'),
                   ),
                   Container(
                     width: 150,
@@ -126,7 +129,7 @@ class _TransactionFormState extends State<TransactionForm> {
                           double.tryParse(_valueController.text) ?? 0.0;
                       final title = _titleController.text;
 
-                      widget.onSubmit(title, value, _selectedDate);
+                      widget.onSubmit(title, value, _selectedDate!);
                     },
                   ),
                 ],
